@@ -8,11 +8,21 @@ import type { ServiceId } from "@/types/booking";
 interface Props {
   selectedId?: ServiceId;
   onNext: (data: { serviceId: ServiceId }) => void;
+  onBack?: () => void;
 }
 
-export function StepService({ selectedId, onNext }: Props) {
+export function StepService({ selectedId, onNext, onBack }: Props) {
   return (
     <div className="p-6 sm:p-8">
+      {onBack && (
+        <button
+          onClick={onBack}
+          className="mb-4 text-xs text-[var(--color-spa-muted)] hover:text-[var(--color-spa-charcoal)] transition-colors flex items-center gap-1"
+          style={{ fontFamily: "var(--font-inter)" }}
+        >
+          ← Back to session type
+        </button>
+      )}
       <h2
         className="text-2xl font-medium text-[var(--color-spa-green-dark)] mb-2"
         style={{ fontFamily: "var(--font-cormorant)" }}

@@ -14,6 +14,7 @@ const schema = z.object({
     .string()
     .min(10, "Valid phone number required")
     .regex(/^[+\d\s\-()]{10,}$/, "Valid phone number required"),
+  homeAddress: z.string().optional(),
   notes: z.string().optional(),
 });
 
@@ -21,22 +22,29 @@ type FormValues = z.infer<typeof schema>;
 
 interface Props {
   data: Partial<BookingFormData>;
-  onNext: (data: Pick<BookingFormData, "firstName" | "lastName" | "email" | "phone" | "notes">) => void;
+  onNext: (data: Pick<BookingFormData, "firstName" | "lastName" | "email" | "phone" | "homeAddress" | "notes">) => void;
   onBack: () => void;
 }
 
 export function StepDetails({ data, onNext, onBack }: Props) {
+  const isHomeService = data.sessionType === "home-service";
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(
+      isHomeService
+        ? schema.extend({ homeAddress: z.string().min(10, "Please enter your full address") })
+        : schema
+    ),
     defaultValues: {
       firstName: data.firstName ?? "",
       lastName: data.lastName ?? "",
       email: data.email ?? "",
       phone: data.phone ?? "",
+      homeAddress: data.homeAddress ?? "",
       notes: data.notes ?? "",
     },
   });
@@ -55,6 +63,15 @@ export function StepDetails({ data, onNext, onBack }: Props) {
       >
         We'll send your confirmation and reminders to these contacts.
       </p>
+
+      {isHomeService && (
+        <div className="mb-5 p-3 rounded-xl bg-[var(--color-spa-orange)]/8 border border-[var(--color-spa-orange)]/20 flex gap-2">
+          <span className="text-base shrink-0">🏠</span>
+          <p className="text-xs text-[var(--color-spa-charcoal)] leading-relaxed" style={{ fontFamily: "var(--font-inter)" }}>
+            <strong>Home Service:</strong> Please include your full address so our therapist can find you easily. A ₦5,000 travel fee applies.
+          </p>
+        </div>
+      )}
 
       <form onSubmit={handleSubmit(onNext)} className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
@@ -95,6 +112,21 @@ export function StepDetails({ data, onNext, onBack }: Props) {
             className={inputCls(!!errors.phone)}
           />
         </Field>
+
+        {isHomeService && (
+          <Field
+            label="Home / Hotel / Office Address"
+            error={errors.homeAddress?.message}
+            hint="Include street, area, and any access notes (e.g. gate code)"
+          >
+            <textarea
+              {...register("homeAddress")}
+              rows={3}
+              placeholder="e.g. 14 Admiralty Way, Lekki Phase 1, Lagos. Blue gate, 3rd floor."
+              className={cn(inputCls(!!errors.homeAddress), "resize-none")}
+            />
+          </Field>
+        )}
 
         <Field label="Special requests (optional)" error={errors.notes?.message}>
           <textarea

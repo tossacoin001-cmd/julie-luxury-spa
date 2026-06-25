@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import type { BookingFormData, BookingStep } from "@/types/booking";
+import { StepSessionType } from "./StepSessionType";
 import { StepService } from "./StepService";
 import { StepDateTime } from "./StepDateTime";
 import { StepDetails } from "./StepDetails";
@@ -10,6 +11,7 @@ import { StepPayment } from "./StepPayment";
 import { StepConfirmation } from "./StepConfirmation";
 
 const STEP_ORDER: BookingStep[] = [
+  "session-type",
   "service",
   "datetime",
   "details",
@@ -18,6 +20,7 @@ const STEP_ORDER: BookingStep[] = [
 ];
 
 const STEP_LABELS: Record<BookingStep, string> = {
+  "session-type": "Session Type",
   service: "Treatment",
   datetime: "Date & Time",
   details: "Your Details",
@@ -27,7 +30,7 @@ const STEP_LABELS: Record<BookingStep, string> = {
 
 export function BookingFlow() {
   const searchParams = useSearchParams();
-  const [step, setStep] = useState<BookingStep>("service");
+  const [step, setStep] = useState<BookingStep>("session-type");
   const [data, setData] = useState<Partial<BookingFormData>>({});
   const [bookingRef, setBookingRef] = useState<string>("");
 
@@ -52,6 +55,8 @@ export function BookingFlow() {
     if (prevStep) setStep(prevStep);
   };
 
+  const visibleSteps = STEP_ORDER.filter((s) => s !== "confirmation");
+
   return (
     <div className="min-h-[calc(100vh-80px)] bg-[var(--color-spa-cream)] pt-20">
       <div className="max-w-2xl mx-auto px-4 sm:px-6 py-12">
@@ -70,13 +75,18 @@ export function BookingFlow() {
             Reserve your{" "}
             <em className="italic text-[var(--color-spa-orange)]">luxury</em>
           </h1>
+          {data.sessionType && (
+            <p className="mt-2 text-xs text-[var(--color-spa-muted)]" style={{ fontFamily: "var(--font-inter)" }}>
+              {data.sessionType === "home-service" ? "🏠 Home Service — we come to you" : "🏛️ In-Spa Visit — Victoria Island / Lekki"}
+            </p>
+          )}
         </div>
 
         {/* Progress steps */}
         {step !== "confirmation" && (
           <div className="flex items-center justify-between mb-10 relative">
             <div className="absolute top-4 left-0 right-0 h-px bg-[var(--color-spa-stone)] -z-0" />
-            {STEP_ORDER.filter((s) => s !== "confirmation").map((s, i) => {
+            {visibleSteps.map((s, i) => {
               const idx = STEP_ORDER.indexOf(s);
               const done = currentIndex > idx;
               const active = step === s;
@@ -112,8 +122,11 @@ export function BookingFlow() {
 
         {/* Step content */}
         <div className="bg-white rounded-2xl shadow-sm border border-[var(--color-spa-stone)] overflow-hidden">
+          {step === "session-type" && (
+            <StepSessionType selected={data.sessionType} onNext={next} />
+          )}
           {step === "service" && (
-            <StepService selectedId={data.serviceId} onNext={next} />
+            <StepService selectedId={data.serviceId} onNext={next} onBack={prev} />
           )}
           {step === "datetime" && (
             <StepDateTime

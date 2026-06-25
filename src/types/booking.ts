@@ -6,6 +6,8 @@ export type ServiceId =
   | "mani-pedi-luxury"
   | "couples-retreat";
 
+export type SessionType = "walk-in" | "home-service";
+
 export interface Service {
   id: ServiceId;
   name: string;
@@ -21,6 +23,7 @@ export interface TimeSlot {
 }
 
 export interface BookingFormData {
+  sessionType: SessionType;
   serviceId: ServiceId;
   date: string;
   time: string;
@@ -28,7 +31,8 @@ export interface BookingFormData {
   lastName: string;
   email: string;
   phone: string;
+  homeAddress?: string;
   notes?: string;
 }
 
-export type BookingStep = "service" | "datetime" | "details" | "payment" | "confirmation";
+export type BookingStep = "session-type" | "service" | "datetime" | "details" | "payment" | "confirmation";

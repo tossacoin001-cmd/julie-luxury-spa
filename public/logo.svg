@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 420" fill="none">
+  <!-- Outer green swoosh -->
+  <path d="M200 30 C280 30 340 80 360 150 C380 220 350 290 290 330" stroke="#62B626" stroke-width="28" stroke-linecap="round" fill="none"/>
+  <!-- Middle orange swoosh -->
+  <path d="M200 60 C265 65 315 105 330 170 C345 235 315 300 260 330" stroke="#E8511A" stroke-width="22" stroke-linecap="round" fill="none"/>
+  <!-- Inner red swoosh -->
+  <path d="M70 170 C60 240 90 300 150 340 C185 360 225 365 260 355" stroke="#CC2200" stroke-width="18" stroke-linecap="round" fill="none"/>
+  <!-- Green left swoosh -->
+  <path d="M60 200 C55 260 80 320 130 355 C165 375 210 382 250 372" stroke="#62B626" stroke-width="14" stroke-linecap="round" fill="none"/>
+
+  <!-- Massage table -->
+  <rect x="130" y="175" width="140" height="12" rx="6" fill="#111111"/>
+  <!-- Table leg -->
+  <rect x="192" y="187" width="16" height="30" rx="4" fill="#111111"/>
+
+  <!-- Person receiving massage (simplified stick figure lying down) -->
+  <!-- Body -->
+  <ellipse cx="200" cy="172" rx="42" ry="10" fill="#111111" opacity="0.15"/>
+  <rect x="160" y="163" width="80" height="14" rx="7" fill="#222222"/>
+  <!-- Head -->
+  <circle cx="232" cy="158" r="13" fill="none" stroke="#222222" stroke-width="3"/>
+  <!-- Arm being massaged -->
+  <path d="M165 167 C150 160 145 148 152 140" stroke="#222222" stroke-width="3" stroke-linecap="round" fill="none"/>
+
+  <!-- Therapist hands (above, massaging) -->
+  <path d="M175 148 C172 138 178 130 186 133" stroke="#222222" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  <path d="M195 145 C192 135 198 127 206 130" stroke="#222222" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+
+  <!-- JULIE text -->
+  <text x="200" y="288" font-family="Arial Black, Arial, sans-serif" font-size="54" font-weight="900" text-anchor="middle" fill="#111111" letter-spacing="4">JULIE</text>
+  <!-- LUXURY SPA text -->
+  <text x="200" y="336" font-family="Arial Black, Arial, sans-serif" font-size="30" font-weight="900" text-anchor="middle" fill="#111111" letter-spacing="6">LUXURY SPA</text>
+</svg>
