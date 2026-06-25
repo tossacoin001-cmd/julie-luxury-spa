@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* Brand — extracted from Julie Luxury Spa logo */
+  --color-spa-green:       #62B626;
+  --color-spa-green-light: #82CC46;
+  --color-spa-green-dark:  #2A5010;
+  --color-spa-orange:      #E8511A;
+  --color-spa-orange-light:#F07040;
+  --color-spa-gold:        #C9A455;
+  --color-spa-gold-light:  #E0C07A;
+
+  /* Neutrals — warm, natural, luxury */
+  --color-spa-cream:       #FDFAF4;
+  --color-spa-cream-dark:  #F5F0E8;
+  --color-spa-stone:       #E8E2D5;
+  --color-spa-stone-dark:  #D4CAB8;
+  --color-spa-earth:       #8B6F47;
+  --color-spa-charcoal:    #2C2C2C;
+  --color-spa-muted:       #6B6860;
+  --color-spa-white:       #FFFFFF;
+
+  /* Typography */
+  --font-display: var(--font-cormorant);
+  --font-body:    var(--font-inter);
+}
+
+:root {
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-spa-cream);
+  color: var(--color-spa-charcoal);
+  font-family: var(--font-inter), Georgia, serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-spa-cream); }
+::-webkit-scrollbar-thumb { background: var(--color-spa-stone-dark); border-radius: 3px; }
+
+/* Selection */
+::selection {
+  background: #62B62630;
+  color: var(--color-spa-green-dark);
+}
+
+/* Smooth image loading */
+img { max-width: 100%; }
